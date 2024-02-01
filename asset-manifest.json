@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/Safar/static/css/main.6b416529.css",
+    "main.js": "/Safar/static/js/main.daf9ee6b.js",
+    "static/js/787.b193f90e.chunk.js": "/Safar/static/js/787.b193f90e.chunk.js",
+    "static/media/logo2.png": "/Safar/static/media/logo2.ecdc5063dbba6d12fb1a.png",
+    "static/media/navlogo.png": "/Safar/static/media/navlogo.807dfe7f07589ceb02ed.png",
+    "index.html": "/Safar/index.html",
+    "main.6b416529.css.map": "/Safar/static/css/main.6b416529.css.map",
+    "main.daf9ee6b.js.map": "/Safar/static/js/main.daf9ee6b.js.map",
+    "787.b193f90e.chunk.js.map": "/Safar/static/js/787.b193f90e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6b416529.css",
+    "static/js/main.daf9ee6b.js"
+  ]
+}
