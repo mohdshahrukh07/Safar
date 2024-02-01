@@ -1,0 +1,109 @@
+.contact-container {
+    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0px;
+    margin: auto;
+}
+
+.contact-container .contact-Dbox {
+    display: flex;
+    width: 100%;
+    margin: 20px 0px;
+}
+
+.contact-container .contact-Dbox .Dbox-img {
+    width: 40%;
+    margin: 15px;
+}
+
+.contact-container .contact-Dbox .Dbox-img img {
+    width: 100%;
+    height: 100%;
+}
+
+.contact-container .contact-Dbox .contact-details {
+    width: 60%;
+    margin: 15px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.contact-container .contact-Dbox .contact-details .contact-form {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.contact-container .contact-Dbox .contact-details .contact-form input {
+    height: 50px;
+}
+
+.contact-container .contact-Dbox .contact-details .contact-form .form-control:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+}
+
+.contact-container .contact-Dbox .contact-details .contact-form .msgr-name,
+.msgr-email {
+    width: 50%;
+    padding: 10px 15px;
+}
+
+.contact-container .contact-Dbox .contact-details .contact-form .msgr-subject,
+.msgr-mgs {
+    width: 100%;
+    padding: 10px 15px;
+}
+
+.contact-container .contact-Dbox .contact-details .contact-form textarea {
+    resize: none;
+}
+
+.contact-container .contact-Dbox .contact-details .contact-form .mgs-btn-box .msg-btn {
+    width: 180px;
+    height: 60px;
+    margin: 15px;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #ff5722;
+}
+
+@media screen and (max-width:1200px) {
+    .contact-container {
+        width: 100%;
+    }
+
+    .contact-container .contact-Dbox .Dbox-img {
+        width: 50%;
+    }
+
+    .contact-container .contact-Dbox .contact-details {
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width:1024px) {
+    .contact-container .contact-Dbox .Dbox-img {
+        display: none;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    .contact-container .contact-Dbox .contact-details .contact-form .msgr-name,
+    .msgr-email {
+        width: 100%;
+    }
+}

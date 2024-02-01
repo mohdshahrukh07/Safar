@@ -1,0 +1,79 @@
+.TourPage-container{
+    background-color: #f7f9fc;
+}
+.tour-container {
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+/* searched tour packages container css */
+.element-container {
+    width: 100vw;
+    min-height: 100px;
+    margin: 30px 0px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+}
+.selector-container{
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.selector-items {
+    width: 200px;
+    height: 80px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.selector-items .slt-label{
+    font-size: 18px;
+    font-weight: 600;
+}
+.select-option {
+    width: 200px;
+}
+
+.searched-packeges{
+    display: flex;
+    justify-content: center;
+    padding-top:30px;
+}
+.tour-container .element-container .searched-packeges .packages{
+    justify-content: flex-start;
+}
+
+.next-prev-btn .btn:focus{
+    box-shadow: none;
+    border-color: none;
+}
+@media screen and (min-width:992px) {
+    .tour-container .element-container .searched-packeges .packages{
+        width: 100%;
+    }
+    .tour-container .element-container .searched-packeges .packages .card-container{
+        width: 32.3%;
+    }
+}
+@media screen and (max-width:600px) {
+    .selector-container{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+    .selector-items{
+        width: 100%;
+    }
+    .selector-items .select-option{
+        width: 100%;
+    }
+}
