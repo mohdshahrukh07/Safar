@@ -219,7 +219,7 @@ function TravelBox() {
                       <i className="fa-solid fa-star" ></i>
                       <i className="fa-solid fa-star" ></i>
                     </div>
-                    <p className="discription">Experience of travelling with Safar has been very satisfactory. They have faithfully stuck to the schedule that was planned prior to the tour. </p>
+                    <p className="discription">Experience of travelling with Safar has been very satisfactory. They have faithfully stuck to the schedule that was planned prior to the tour.</p>
 
                   </div>
                 </SwiperSlide>
