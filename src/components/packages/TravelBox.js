@@ -102,26 +102,26 @@ function TravelBox() {
                 className='mySwiper'>
                 {currentData.map((element => {
                   return <SwiperSlide key={element.id}>
-                      <div className="box1 places-box">
-                        <img src={element.image} alt="" />
-                        <div className="wrapper-discount">
-                          <div className="text">Discount {element.discount}</div>
-                        </div>
-                        <div className="tour-content">
-                          <h3 className="title"><Link to={`/bookpage/${element.id}`}>{element.title}</Link></h3>
-                          <div className="tour-price">
-                            <span className="tour-price-info">
-                              <span className="current-amount" data-amount="142.50">
-                                <span className="current-symbol">&#x20B9;</span>
-                                {element.price}
-                              </span>
+                    <div className="box1 places-box">
+                      <img src={element.image} alt="" />
+                      <div className="wrapper-discount">
+                        <div className="text">Discount {element.discount}</div>
+                      </div>
+                      <div className="tour-content">
+                        <h3 className="title"><Link to={`/bookpage/${element.id}`}>{element.title}</Link></h3>
+                        <div className="tour-price">
+                          <span className="tour-price-info">
+                            <span className="current-amount" data-amount="142.50">
+                              <span className="current-symbol">&#x20B9;</span>
+                              {element.price}
                             </span>
-                            <span> / ticket </span>
-                          </div>
+                          </span>
+                          <span> / ticket </span>
                         </div>
                       </div>
-                    </SwiperSlide>
-                  
+                    </div>
+                  </SwiperSlide>
+
                 }))
                 }
               </Swiper>
@@ -219,7 +219,7 @@ function TravelBox() {
                       <i className="fa-solid fa-star" ></i>
                       <i className="fa-solid fa-star" ></i>
                     </div>
-                    <p className="discription">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero perferendis, hic deserunt sed architecto magni labore </p>
+                    <p className="discription">Experience of travelling with Safar has been very satisfactory. They have faithfully stuck to the schedule that was planned prior to the tour. </p>
 
                   </div>
                 </SwiperSlide>
@@ -239,7 +239,8 @@ function TravelBox() {
                       <i className="fa-solid fa-star" ></i>
                       <i className="fa-solid fa-star" ></i>
                     </div>
-                    <p className="discription">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero perferendis, hic deserunt sed architecto magni labore </p>
+                    <p className="discription">I would like to thank you for your service, our journey through India has been an amazing experience
+                      Hope to come back soon, have a nice day </p>
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
@@ -258,7 +259,7 @@ function TravelBox() {
                       <i className="fa-solid fa-star" ></i>
                       <i className="fa-solid fa-star" ></i>
                     </div>
-                    <p className="discription">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero perferendis, hic deserunt sed architecto magni labore </p>
+                    <p className="discription">Thank you very much for all your assistance for my safe trip to Delhi. Your driver Mahesh was excellent. Will contact you again for my future trips.</p>
                   </div>
                 </SwiperSlide>
               </Swiper>

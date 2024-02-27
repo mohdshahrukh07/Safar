@@ -197,36 +197,6 @@
 }
 
 /* -----Responsive code------ */
-@media screen and (max-width:1024px) {
-
-  .search-box {
-    width: 90%;
-    margin: 30px auto;
-    padding: 30px 20px 30px;
-    border-radius: 5px;
-  }
-
-  .search-box form {
-    display: block;
-  }
-
-  .search-box form input,
-  .selector,
-  .search-guests-field {
-    border-bottom: 1px solid #ddd;
-    width: 100%;
-    margin-bottom: 20px;
-    margin-top: 10px;
-    padding-bottom: 10px;
-  }
-
-  .search-box form button {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 50%)
-  }
-}
 
 @media screen and (max-width:768px) {
 

@@ -43,12 +43,12 @@ function LoginPage() {
               <input type="email" name="email" autoComplete="username" className="form-control" id="newemail" required/>
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">confirm email*</label>
-              <input type="email" name="email" autoComplete="username" className="form-control" id="cofirm-email"required/>
+              <label htmlFor="exampleFormControlInput1" className="form-label">EnterPassword</label>
+              <input type="password" className="form-control" autoComplete='current-password' id="inputPassword" required/>
             </div>
           </div>
           <div className="detail-submit-box">
-            <h4>A password will be emailed to you.</h4>
+            <h4>I will emailed you for security</h4>
             <button type='submit' className="signup-btn">Sign up</button>
           </div>
         </form>

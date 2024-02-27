@@ -13,9 +13,8 @@ function About() {
           <div className="heading-line">Our Company</div>
           <h1>Mission Statement</h1>
           <div className="about-para">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deleniti harum sapiente obcaecati eius placeat quidem asperiores at quisquam magni! Eligendi impedit veniam blanditiis fugiat illum cumque enim nisi error vitae!</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate perspiciatis reprehenderit nemo fugit rerum quas aliquid veritatis ex!</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos velit architecto cupiditate illo explicabo vero minima cumque sunt expedita iste vitae aperiam quisquam, repudiandae inventore eius. Veniam at cum est.</p>
+            <p>Safar is the Organized Adventure Platform, offering the India’s largest selection of multi-day organized adventures in All over India. Safar’s intuitive online platform seamlessly connects travelers and travel agents with 2,500+ multi-day operators, offering 5000+ adventures in more than 200 Cities in all over India.</p>
+            <p>With offices in Delhi, bengalore, and Jaipur, Safar’s travel experts are available online 24/7 to support the entire booking and travel experience. Safar promotes environmentally sustainable travel by enabling all travelers to view and offset the carbon impact of their adventures, and the company works tirelessly with local operators to help protect and strengthen the communities that benefit from adventure tourism.</p>
           </div>
         </div>
       </div>

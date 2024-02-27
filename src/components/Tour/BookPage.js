@@ -16,7 +16,7 @@ export default function BookPage() {
         event.target.className = event.target.value !== '' ? 'has-value' : '';
     }
     //for selecting from today's date
-    const today = new Date().toISOString().split('T')[0]; 
+    const today = new Date().toISOString().split('T')[0];
 
     // data fetching from SafarData.json
 
@@ -38,7 +38,7 @@ export default function BookPage() {
         fetchData();
     }, [id]);
 
- // ---funtions for selecting members with his age (adult,youth,children)
+    // ---funtions for selecting members with his age (adult,youth,children)
 
     const [adult, setadult] = useState(null);
     const [youth, setyouth] = useState(null);
@@ -75,7 +75,7 @@ export default function BookPage() {
         }
         if (child) {
             const childTotal = state.price * child.value * (20 / 100);
-            
+
             total += childTotal;
         }
         setCalculatedValue(total = total.toFixed(0));
@@ -160,18 +160,11 @@ export default function BookPage() {
                             <div className="booking-discription">
                                 <div className="paragraph">
                                     <h3>Overview</h3><hr />
-                                    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto expedita,
-                                        et placeat laboriosam dolores perferendis. Eligendi iure distinctio fugit
-                                        animi cupiditate ea deserunt libero reprehenderit error similique, ratione
-                                        magni dolor exercitationem dolorum possimus molestias. Corrupti culpa
-                                        quisquam eum iure, aperiam quam ullam explicabo repellat, totam accusantium
-                                        nihil a cumque assumenda. Lorem ipsum dolor sit amet consectetur adipisicing
-                                        elit. Cumque sapiente, beatae recusandae ab ratione qui ut inventore explicabo
-                                        laborum quos molestiae dolorum expedita at consectetur rem praesentium
-                                        perspiciatis nihil non quo dolores, dolore exercitationem asperiores? Provident,
-                                        expedita. Laboriosam dolores maiores corporis qui repellat dolorem, debitis odio
-                                    </div>
+                                    <div>{state.discription1}<br />{state.discription2}</div><br />
 
+                                    <div>Day 1: Heritage Highlights<br />{state.day1}<br /><br />
+                                        Day 2: Cultural Immersion <br />{state.day2}<br /> <br />
+                                        Day 3: Adventure & Relaxation <br />{state.day3} </div>
                                 </div>
                             </div>
                             <div className="booking-discription">
