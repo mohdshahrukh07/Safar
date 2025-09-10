@@ -4,41 +4,51 @@ import './Tourpage.css'
 import Select from 'react-select'
 import Linkstrip from '../Linkstrip/Linkstrip'
 import { Link } from 'react-router-dom'
+import useApi from '../../api/useApi'
+import TourSkeleton from '../Helpers/TourSkeleton'
 function TourPage() {
   // with the help of this component, we can find and tour package by searching or filtering.
-  
+
   // location and sortBy variable for making select and its option 
+  const { tourAPi } = useApi();
+  const [loading, setLoadting] = useState(true);
   const location = [
-    { value: 'All_Destination', label: 'All Destination' },
+    { value: "All_Destination", label: 'All Destination' },
     { value: 'Delhi', label: 'Delhi' },
     { value: 'Goa', label: 'Goa' },
     { value: 'Rajasthan', label: 'Rajasthan' }
   ]
   const sortBy = [
-    { value: 'A_Z', label: 'A-Z' },
-    { value: 'Z_A', label: 'Z-A' },
-    { value: 'PriceHigh', label: 'Price--Low to High' },
-    { value: 'PriceLow', label: 'Price--High to Low' }
+    { value: 'az', label: 'A-Z' },
+    { value: 'za', label: 'Z-A' },
+    { value: 'low_high', label: 'Price--Low to High' },
+    { value: 'high_low', label: 'Price--High to Low' }
   ]
   // fetcing data from SafarData.json(json file)
   const itemsPerPage = 6;
   const [state, setState] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const jsonData = `${process.env.PUBLIC_URL}/SafarData.json`;
-        const data = await fetch(jsonData);
-        const parsedData = await data.json();
-        setState(parsedData.TravelPackage);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+  const [selectedLocation, setSelectedLocation] = useState(location[0]);
+  const [selectedSortOption, setSelectedSortOption] = useState(sortBy[0]);
 
-    fetchData();
-  }, []);
+  useEffect(() => {
+    try {
+      const getTourData = async () => {
+        setLoadting(true);
+        const response = await tourAPi({ destination: selectedLocation.value, sort: selectedSortOption.value });
+        if (response.status) {
+          setLoadting(false);
+          setState(response.data);
+        }
+        setLoadting(false);
+      }
+      getTourData();
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+
+  }, [selectedLocation, selectedSortOption]);
 
   // slice all json data to show only 6 packeges in a single page
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -55,30 +65,6 @@ function TourPage() {
     setCurrentPage((prevPage) => prevPage - 1);
   };
 
-  // funtons for selectors to change their fetched data by selecting options
-  
-  // function for selectors to change thair feched data by select location 
-  const [selectedLocation, setSelectedLocation] = useState(location[0]);
-
-  const filteredData = selectedLocation.value === 'All_Destination'
-  ? currentData
-  : currentData.filter((element) => element.destination === selectedLocation.value);
-  // funtion for slelctors to sort data by selecting options
-  const [selectedSortOption, setSelectedSortOption] = useState(sortBy[0]);
-  const sortedData = [...filteredData].sort((a, b) => {
-    switch (selectedSortOption.value) {
-      case 'A_Z':
-        return a.title.localeCompare(b.title);
-      case 'Z_A':
-        return b.title.localeCompare(a.title);
-      case 'PriceHigh':
-        return parseFloat(a.price) - parseFloat(b.price);
-      case 'PriceLow':
-        return parseFloat(b.price) - parseFloat(a.price);
-      default:
-        return 0;
-    }
-  });
   return (
     <div className='TourPage-container'>
       <Linkstrip Pagename="Search" ComponentName="Tour" />
@@ -87,23 +73,27 @@ function TourPage() {
           <div className="selector-container">
             <div className="selector-items slt-state">
               <h3 className="slt-label">Select Location</h3>
-              <Select className='select-option' options={location} value={selectedLocation} 
-              onChange={(selected) => setSelectedLocation(selected)}/>
+              <Select className='select-option' options={location} value={selectedLocation}
+                onChange={(selected) => setSelectedLocation(selected)} />
             </div>
             <div className="selector-items arange-items">
               <h3 className="slt-label">Sort By</h3>
-              <Select className='select-option' options={sortBy}  value={selectedSortOption}
-          onChange={(selected) => setSelectedSortOption(selected)}/>
+              <Select className='select-option' options={sortBy} value={selectedSortOption}
+                onChange={(selected) => setSelectedSortOption(selected)} />
             </div>
           </div>
           <div className="searched-packeges">
             <div className="packages">
-              {sortedData.map((element => {
+
+              { loading ? 
+              <TourSkeleton />
+              :
+              currentData.map((element => {
                 return <div className="card-container" key={element.title} >
                   <div className="inner-image"><img src={element.urlToImage} alt="" /></div>
                   <div className="card-detail">
                     <div className="inner-detail">
-                      <div className="card-offer">{element.discount}</div>
+                      <div className="card-offer">{element.discount}%</div>
                       <div className="card-box">
                         <div className="tour-title">
                           <div className="tour-stars"> <i className="fa-solid fa-star" ></i>
@@ -136,7 +126,7 @@ function TourPage() {
             </div>
           </div>
           <div className="next-prev-btn d-flex justify-content-center">
-            <button type="button" className="btn btn-danger m-3" onClick={handlePrevClick}  disabled={currentPage === 1}>	&larr; Prev</button>
+            <button type="button" className="btn btn-danger m-3" onClick={handlePrevClick} disabled={currentPage === 1}>	&larr; Prev</button>
             <button type="button" className="btn btn-danger m-3" onClick={handleNextClick} disabled={currentPage === Math.ceil(state.length / itemsPerPage)}>Next &rarr;</button>
           </div>
         </div>
