@@ -7,6 +7,7 @@ import './Booking.css'
 import 'swiper/swiper-bundle.css';
 import 'swiper/css';
 import useApi from '../../api/useApi';
+import BookPageSkeleton from '../Helpers/BookPageSkeleton';
 export default function BookPage() {
 
     // code for showing selected date
@@ -109,7 +110,8 @@ export default function BookPage() {
 
     return (
         <div>
-            {state && (
+            { loading ? <BookPageSkeleton /> :
+            state && (
                 <div className='bookpage-container'>
                     <div className="booking-container">
                         <div className="image-slidebox">
