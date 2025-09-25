@@ -23,11 +23,10 @@ function TravelBox() {
         setLoading(true);
         const response = await packagesApi();
         if (response.status) {
-          setLoading(false);
           setPackages(response.packages);
           setSlidePackages(response.slidePackages);
+          setLoading(false);
         }
-        setLoading(false);
       }
       fetchData();
     }

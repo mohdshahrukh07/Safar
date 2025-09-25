@@ -38,10 +38,9 @@ function TourPage() {
         setLoadting(true);
         const response = await tourAPi({ destination: selectedLocation.value, sort: selectedSortOption.value });
         if (response.status) {
-          setLoadting(false);
           setState(response.data);
+          setLoadting(false);
         }
-        setLoadting(false);
       }
       getTourData();
     } catch (error) {

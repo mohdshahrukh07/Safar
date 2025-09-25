@@ -1,7 +1,8 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const api = axios.create({
-    baseURL: "http://127.0.0.1:8000/api", // apna backend URL
+    baseURL: "http://127.0.0.1:8000/", // apna backend URL
     headers: {
         "Content-Type": "application/json",
     },
@@ -25,9 +26,10 @@ api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
+            const navigate = useNavigate();
             // Unauthorized → logout karwa do
             localStorage.removeItem("user");
-            window.location.href = "/login";
+             navigate("/login");
         }
         return Promise.reject(error);
     }

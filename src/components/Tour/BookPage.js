@@ -6,43 +6,75 @@ import Select from 'react-select'
 import './Booking.css'
 import 'swiper/swiper-bundle.css';
 import 'swiper/css';
+import useApi from '../../api/useApi';
 export default function BookPage() {
 
     // code for showing selected date
+    const { packageInfoApi, BookingApi } = useApi();
     const [selectedDate, setSelectedDate] = useState('');
-
+    const [activeBooking, setAtiveBooking] = useState(false);
+    const [allowToBook, SetAllowToBook] = useState(false);
+    const [state, setState] = useState({});
+    const [adult, setadult] = useState(0);
+    const [youth, setyouth] = useState(0);
+    const [child, setchild] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const today = new Date().toISOString().split('T')[0];
+    const { id } = useParams();
+    const [formData, setFormData] = useState({
+        address: '',
+        startDate: '',
+        adults: 0,
+        teenagers: 0,
+        children: 0,
+        travelPackegeId:id
+    })
     const handleDateChange = (event) => {
         setSelectedDate(event.target.value);
+        handleForm(event)
         event.target.className = event.target.value !== '' ? 'has-value' : '';
     }
-    //for selecting from today's date
-    const today = new Date().toISOString().split('T')[0];
 
-    // data fetching from SafarData.json
 
-    const [state, setState] = useState([]);
-    const { id } = useParams();
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const jsonData = `${process.env.PUBLIC_URL}/SafarData.json`;
-                const data = await fetch(jsonData);
-                const parsedData = await data.json();
-                const info = parsedData.TravelPackage.find(tourInfo => tourInfo.id === parseInt(id));
-                setState(info);
-            } catch (error) {
-                console.error('Error fetching data:', error);
+        const fetchBookingData = async () => {
+            setLoading(true);
+            const response = await packageInfoApi({ travel_id: id });
+
+            if (response) {
+                setState(response.data.travelPackage);
+                setAtiveBooking(response.data.activeBooking);
+                SetAllowToBook(response.data.allowToBook);
+                setLoading(false)
             }
-        };
+        }
+        fetchBookingData();
+    }, [id])
 
-        fetchData();
-    }, [id]);
+    const handleForm = (fieldOrEvent, value) => {
+        setFormData((prev) => {
+            if (fieldOrEvent?.target) {
+                const { name, value } = fieldOrEvent.target;
+                return { ...prev, [name]: value };
+            }
 
-    // ---funtions for selecting members with his age (adult,youth,children)
+            return { ...prev, [fieldOrEvent]: value ? value.value : 0 };
+        });
+    }
 
-    const [adult, setadult] = useState(null);
-    const [youth, setyouth] = useState(null);
-    const [child, setchild] = useState(null);
+    const submit = async (e) => {
+        try {
+            e.preventDefault()
+            const response = await BookingApi(formData);
+            if(response.status){
+                console.log(response);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        
+    }
+
     // function for selecting adult members
     const numberOptions = Array.from({ length: 10 }, (_, index) => ({
         value: index + 1,
@@ -55,31 +87,26 @@ export default function BookPage() {
     }));
     const handleAdult = (selected) => {
         setadult(selected);
+        handleForm("adults", selected)
     };
     const handleYouth = (selected) => {
         setyouth(selected);
+        handleForm("teenagers", selected)
     };
     const handleChild = (selected) => {
         setchild(selected);
+        handleForm("children", selected)
     };
     const [calculatedValue, setCalculatedValue] = useState(null);
     useEffect(() => {
-        let total = 0; //starting or defoult value for total to show total price 
-        if (adult) {
-            const adultTotal = state.price * adult.value;
-            total += adultTotal;
-        }
-        if (youth) {
-            const youthTotal = state.price * youth.value * (40 / 100);
-            total += youthTotal;
-        }
-        if (child) {
-            const childTotal = state.price * child.value * (20 / 100);
+        let total = 0;
+        if (adult) total += state.price * adult.value;
+        if (youth) total += state.price * youth.value * 0.4;
+        if (child) total += state.price * child.value * 0.2;
 
-            total += childTotal;
-        }
-        setCalculatedValue(total = total.toFixed(0));
+        setCalculatedValue(total.toFixed(0));
     }, [adult, youth, child, state.price]);
+
     return (
         <div>
             {state && (
@@ -218,17 +245,18 @@ export default function BookPage() {
                                     <h2>Book this tour</h2>
                                 </div>
                                 <div className="booking-form">
-                                    <form id="form-items">
+                                    <form id="form-items" onSubmit={submit}>
                                         <div className="input-groups">
                                             <label htmlFor="address">Address</label>
-                                            <input type="text" name='address' className='address' placeholder='Your Address' required />
+                                            <input type="text" name='address' className='address' onChange={handleForm} value={formData.address} placeholder='Your Address' required />
                                         </div>
                                         <div className="input-groups">
                                             <label htmlFor="date-from">Date from</label>
                                             <input
                                                 type="date"
-                                                name="date"
+                                                name="startDate"
                                                 placeholder=""
+                                                value={formData.startDate}
                                                 onChange={handleDateChange}
                                                 className={selectedDate !== '' ? 'has-value' : ''}
                                                 min={today}
@@ -242,7 +270,7 @@ export default function BookPage() {
                                                 <Select className='members' value={adult} onChange={handleAdult} options={numberOptions} isClearable required />
                                             </div>
                                             <div className="select-tickets">
-                                                <label htmlFor="ticket">Youth:- 13+ years</label>
+                                                <label htmlFor="ticket">teenagers:- 13+ years</label>
                                                 <Select className='members' value={youth} onChange={handleYouth} options={kidsnumber} isClearable />
 
                                             </div>

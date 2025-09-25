@@ -15,8 +15,12 @@ export function AuthProvider({ children }) {
     }, []);
 
     const login = (userData) => {
+        const fullUserData = {
+            ...userData.user,
+            token: userData.token, // token add karo
+        };
         setUser(userData.user);
-        localStorage.setItem("user", JSON.stringify(userData.user)); // persist
+        localStorage.setItem("user", JSON.stringify(fullUserData)); // persist
     };
 
     const logout = () => {

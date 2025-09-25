@@ -4,9 +4,14 @@ export default function useApi() {
 
     const loginApi = async (data) => {
         try {
-            const response = await api.post('/safar/user/login', data)
+            const response = await api.post('api/safar/user/login', data)
             if (response.status) {
                 console.log("success");
+
+                const userResponse = await api.get('sanctum/csrf-cookie', {
+                    headers: { Authorization: `Bearer ${response.data.token}` },
+                });
+                console.log(userResponse.data);
                 return response;
             } else {
             }
@@ -18,7 +23,7 @@ export default function useApi() {
 
     const RegistrationApi = async (data) => {
         try {
-            const response = await api.post('/safar/user/signup', data)
+            const response = await api.post('api/safar/user/signup', data)
             if (response.status) {
                 return response;
             } else {
@@ -32,7 +37,7 @@ export default function useApi() {
     };
     const logoutApi = async (data) => {
         try {
-            const response = await api.post('/safar/user/logout', data)
+            const response = await api.post('api/safar/user/logout', data)
             if (response.status) {
                 return response;
             } else {
@@ -46,7 +51,7 @@ export default function useApi() {
     }
     const tourAPi = async (data) => {
         try {
-            const response = await api.post('/tours', data)
+            const response = await api.post('api/tours', data)
             if (response.status) {
                 return response.data;
             } else {
@@ -58,14 +63,41 @@ export default function useApi() {
             return false;
         }
     }
-    const packagesApi = async () =>{
-        try{
-             const response = await api.get('/home')
+    const packagesApi = async () => {
+        try {
+            const response = await api.get('api/home')
             if (response.status) {
                 return response.data;
             } else {
                 console.error("failed to logout")
                 return false;
+            }
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
+
+    const packageInfoApi = async (id) => {
+        try {
+            const response = await api.get('api/safar/booking/show', { params: id });
+            if (response.status) {
+                return response.data;
+            } else {
+                console.error("failed to logout")
+                return false;
+            }
+        } catch (error) {
+
+        }
+    }
+    const BookingApi = async (data) => {
+        try {
+            const response = await api.post('api/safar/booking/book', data);
+            if (response.status) {
+                console.log("success");
+                return response;
+            } else {
             }
         } catch (error) {
             console.error(error);
@@ -77,6 +109,8 @@ export default function useApi() {
         RegistrationApi,
         logoutApi,
         tourAPi,
-        packagesApi
+        packagesApi,
+        packageInfoApi,
+        BookingApi
     }
 }
