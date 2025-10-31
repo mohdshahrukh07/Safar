@@ -4,10 +4,12 @@ import Linkstrip from '../Linkstrip/Linkstrip'
 import { useAuth } from '../Authentication/AuthContext'
 import { useNavigate } from "react-router-dom";
 import useApi from '../../api/useApi'
+import Loader from '../Helpers/Loader';
 
 function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const { loginApi, RegistrationApi } = useApi();
   const [registerForm, setRegisterForm] = useState({
     email: '',
@@ -35,33 +37,44 @@ function LoginPage() {
     }))
   }
   const handleLogin = async (e) => {
+    setLoading(true);
     try {
       e.preventDefault();
       const response = await loginApi(loginForm);
       if (response.status) {
         login(response.data);
+        setLoading(false);
         navigate('/home');
       } else {
+        console.log(response)
+        setLoading(false);
         console.error("failed to login");
       }
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
+    setLoading(false);
   };
   const handleRegistration = async (e) => {
+    setLoading(true);
     try {
       e.preventDefault();
       const response = await RegistrationApi(registerForm);
       if (response.status) {
         console.log("registration");
         login(response.data);
+        setLoading(false);
         navigate('/home');
       } else {
+        setLoading(false);
         console.log("failed to signup");
       }
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
+    setLoading(false);
   }
   return (
     <div>
@@ -128,6 +141,7 @@ function LoginPage() {
           </div>
         </form>
       </div>
+      <Loader loading={loading} />
     </div>
   )
 }

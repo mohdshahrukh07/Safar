@@ -5,7 +5,7 @@ export default function useApi() {
     const loginApi = async (data) => {
         try {
             const response = await api.post('api/safar/user/login', data)
-            if (response.status) {
+            if (response) {
                 console.log("success");
 
                 const userResponse = await api.get('sanctum/csrf-cookie', {
@@ -104,6 +104,20 @@ export default function useApi() {
             return false;
         }
     }
+
+    const BookingListApi = async () => {
+        try {
+            const response = await api.get('api/safar/deshboard/bookedList');
+            if (response.status) {
+                console.log("success");
+                return response.data;
+            } else {
+            }
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
     return {
         loginApi,
         RegistrationApi,
@@ -111,6 +125,7 @@ export default function useApi() {
         tourAPi,
         packagesApi,
         packageInfoApi,
-        BookingApi
+        BookingApi,
+        BookingListApi
     }
 }
