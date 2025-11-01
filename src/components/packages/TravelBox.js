@@ -7,29 +7,35 @@ import './Travelbox.css'
 import 'swiper/swiper-bundle.css';
 import 'swiper/css/navigation';
 import 'swiper/css';
+import useApi from '../../api/useApi';
+import TourSkeleton from '../Helpers/TourSkeleton';
+import SlideSkeleton from '../Helpers/SlideSkeleton';
 function TravelBox() {
-  const [state, setState] = useState([]);
 
+  const [slidePackages, setSlidePackages] = useState([]);
+  const [packages, setPackages] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const { packagesApi } = useApi();
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const jsonData = `${process.env.PUBLIC_URL}/SafarData.json`;
-        const data = await fetch(jsonData);
-        const parsedData = await data.json();
-        setState(parsedData.TravelPackage);
-      } catch (error) {
-        console.error('Error fetching data:', error);
+    try {
+      const fetchData = async () => {
+        setLoading(true);
+        const response = await packagesApi();
+        if (response.status) {
+          setPackages(response.packages);
+          setSlidePackages(response.slidePackages);
+          setLoading(false);
+        }
       }
-    };
-
-    fetchData();
+      fetchData();
+    }
+    catch (error) {
+      console.error('Error fetching data:', error);
+    }
   }, []);
-  const itemsPerPage = 6;
-  const currentPage = 1;
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentData = state.slice(startIndex, endIndex);
+
   return (
     <div>
       <div className="travel-packages">
@@ -38,40 +44,42 @@ function TravelBox() {
           <h1>Top Cities for Travel</h1>
         </div>
         <div className="packages" >
-          {currentData.map((element => {
-            return <div className="card-container" key={element.id} >
-              <div className="inner-image"><img src={element.urlToImage} alt="" /></div>
-              <div className="card-detail">
-                <div className="inner-detail">
-                  <div className="card-offer">{element.discount}</div>
-                  <div className="card-box">
-                    <div className="tour-title">
-                      <div className="tour-stars"> <i className="fa-solid fa-star" ></i>
-                        <i className="fa-solid fa-star" ></i>
-                        <i className="fa-solid fa-star" ></i>
-                        <i className="fa-solid fa-star" ></i>
-                        <i className="fa-solid fa-star" ></i></div>
-                      <Link to={`/bookpage/${element.id}`}><h3 className="card-title">{element.title}</h3></Link>
-                      <div className="tour-address">
-                        <i className="fa-solid fa-location-dot" ></i>
-                        {element.location}
+          {loading ?
+            <TourSkeleton /> :
+            packages.map((element => {
+              return <div className="card-container" key={element.id} >
+                <div className="inner-image"><img src={element.urlToImage} alt="" /></div>
+                <div className="card-detail">
+                  <div className="inner-detail">
+                    <div className="card-offer">{element.discount}%</div>
+                    <div className="card-box">
+                      <div className="tour-title">
+                        <div className="tour-stars"> <i className="fa-solid fa-star" ></i>
+                          <i className="fa-solid fa-star" ></i>
+                          <i className="fa-solid fa-star" ></i>
+                          <i className="fa-solid fa-star" ></i>
+                          <i className="fa-solid fa-star" ></i></div>
+                        <Link to={`/bookpage/${element.id}`}><h3 className="card-title">{element.title}</h3></Link>
+                        <div className="tour-address">
+                          <i className="fa-solid fa-location-dot" ></i>
+                          {element.location}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="tour-rate">
-                    <span className="tour-old-price">
-                      <span className="old-price-symbol">&#x20B9;</span>
-                      {element.cutprice}
-                    </span>
-                    <span className="tour-current-price">
-                      <span className="current-price-symbol">&#x20B9;</span>
-                      {element.price}
-                    </span>
+                    <div className="tour-rate">
+                      <span className="tour-old-price">
+                        <span className="old-price-symbol">&#x20B9;</span>
+                        {element.cutprice}
+                      </span>
+                      <span className="tour-current-price">
+                        <span className="current-price-symbol">&#x20B9;</span>
+                        {element.price}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          }))
+            }))
           }
         </div>
       </div>
@@ -83,48 +91,51 @@ function TravelBox() {
         <div className="container-box">
           <div className="box-row">
             <div className="box-items">
-              <Swiper
-                style={{ '--swiper-navigation-color': '#ff5722', '--swiper-navigation-size': '30px' }}
-                spacebetween={16}
-                breakpoints={{
-                  768: {
-                    slidesPerView: 3
-                  },
-                  480: {
-                    slidesPerView: 2
-                  },
-                  0: {
-                    slidesPerView: 1
-                  }
-                }}
-                modules={[Navigation]}
-                navigation
-                className='mySwiper'>
-                {currentData.map((element => {
-                  return <SwiperSlide key={element.id}>
-                    <div className="box1 places-box">
-                      <img src={element.image} alt="" />
-                      <div className="wrapper-discount">
-                        <div className="text">Discount {element.discount}</div>
-                      </div>
-                      <div className="tour-content">
-                        <h3 className="title"><Link to={`/bookpage/${element.id}`}>{element.title}</Link></h3>
-                        <div className="tour-price">
-                          <span className="tour-price-info">
-                            <span className="current-amount" data-amount="142.50">
-                              <span className="current-symbol">&#x20B9;</span>
-                              {element.price}
+              {loading ?
+                <SlideSkeleton /> :
+                <Swiper
+                  style={{ '--swiper-navigation-color': '#ff5722', '--swiper-navigation-size': '30px' }}
+                  spacebetween={16}
+                  breakpoints={{
+                    768: {
+                      slidesPerView: 3
+                    },
+                    480: {
+                      slidesPerView: 2
+                    },
+                    0: {
+                      slidesPerView: 1
+                    }
+                  }}
+                  modules={[Navigation]}
+                  navigation
+                  className='mySwiper'>
+                  {slidePackages.map((element => {
+                    return <SwiperSlide key={element.id}>
+                      <div className="box1 places-box">
+                        <img src={element.urlToImage} alt="" />
+                        <div className="wrapper-discount">
+                          <div className="text">Discount {element.discount}%</div>
+                        </div>
+                        <div className="tour-content">
+                          <h3 className="title"><Link to={`/bookpage/${element.id}`}>{element.title}</Link></h3>
+                          <div className="tour-price">
+                            <span className="tour-price-info">
+                              <span className="current-amount" data-amount="142.50">
+                                <span className="current-symbol">&#x20B9;</span>
+                                {element.price}
+                              </span>
                             </span>
-                          </span>
-                          <span> / ticket </span>
+                            <span> / ticket </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </SwiperSlide>
+                    </SwiperSlide>
 
-                }))
+                  }))
+                  }
+                </Swiper>
                 }
-              </Swiper>
             </div>
           </div>
         </div>

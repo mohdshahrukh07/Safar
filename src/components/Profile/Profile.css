@@ -1,0 +1,36 @@
+/* Profile.css */
+
+/* Tabs container */
+.profile-tabs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+/* Each button takes equal width of container */
+.profile-tabs button {
+  flex: 1; /* Equal width distribution */
+  padding: 14px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap;
+}
+.btnOrange,.btnOrange:hover{
+  background:#ff5722;
+}
+/* Mobile version */
+@media (max-width: 768px) {
+  .profile-tabs {
+    gap: 0.5rem;
+  }
+
+  .profile-tabs button {
+    padding: 10px 0;
+    font-size: 0.95rem;
+  }
+}

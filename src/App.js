@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { HashRouter as Router,Route,Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/NavBar/Navbar';
 import Footer from './components/Footer/Footer';
@@ -12,24 +12,29 @@ import About from './components/About us/About';
 import Contact from './components/Contact Us/Contact';
 import LoginPage from './components/Login/LoginPage';
 import BookPage from './components/Tour/BookPage';
+import { AuthProvider } from './components/Authentication/AuthContext';
+import Profile from './components/Profile/Profile';
 function App() {
   return (
     <div className="App">
-      <Router>
-        <ScrollTop/>
-      <Navbar />
-      <Routes>
-      <Route index element={<Home to='/home' replace/>} />
-      <Route path='/home' element={<Home />}/>
-          <Route path='/tour' element={<TourPage />}/>
-          <Route path='/bookpage/:id' element={<BookPage/>} />
-          <Route path='/blogs' element={<Blogs />} />
-          <Route path='/about' element={<About />}/>
-          <Route path='/contact' element={<Contact/>}/>
-          <Route path='/login' element={<LoginPage/>}/>
-        </Routes>
-        <Footer />
-      </Router>
+      <AuthProvider>
+        <Router>
+          <ScrollTop />
+          <Navbar />
+          <Routes>
+            <Route index element={<Home to='/home' replace />} />
+            <Route path='/home' element={<Home />} />
+            <Route path='/tour' element={<TourPage />} />
+            <Route path='/bookpage/:id' element={<BookPage />} />
+            <Route path='/blogs' element={<Blogs />} />
+            <Route path='/about' element={<About />} />
+            <Route path='/contact' element={<Contact />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/profile' element={<Profile />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </AuthProvider>
     </div>
   );
 }
