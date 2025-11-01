@@ -16,7 +16,9 @@ export default function useApi() {
             } else {
             }
         } catch (error) {
-            console.error(error);
+            if(error.response){
+                return error.response.data;
+            }
             return false;
         }
     };
@@ -31,7 +33,9 @@ export default function useApi() {
                 return false;
             }
         } catch (error) {
-            console.error(error);
+            if(error.response){
+                return error.response.data;
+            }
             return false;
         }
     };

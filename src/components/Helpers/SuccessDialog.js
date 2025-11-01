@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function SuccessDialog({ show, title = "Success", message, onClose }) {
+export default function SuccessDialog({ symbol = true,show, title = "Success", message, onClose }) {
   if (!show) return null;
 
   return (
@@ -25,7 +25,7 @@ export default function SuccessDialog({ show, title = "Success", message, onClos
         ></button>
 
         {/* Success Icon */}
-        <div
+       {symbol && <div
           className="d-flex justify-content-center align-items-center mx-auto mb-4 rounded-circle"
           style={{
             backgroundColor: "#e8f5e9",
@@ -43,7 +43,7 @@ export default function SuccessDialog({ show, title = "Success", message, onClos
   >
     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.97 10.97l4.243-4.242a.75.75 0 1 0-1.06-1.06L6.5 8.939 5.354 7.793a.75.75 0 1 0-1.06 1.06l2 2a.75.75 0 0 0 1.06 0z" />
   </svg>
-        </div>
+        </div>}
 
         {/* Title */}
         <h3 className="fw-bold mb-3" style={{ color: "#ff5722" }}>

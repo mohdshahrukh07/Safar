@@ -5,12 +5,15 @@ import { useAuth } from '../Authentication/AuthContext'
 import { useNavigate } from "react-router-dom";
 import useApi from '../../api/useApi'
 import Loader from '../Helpers/Loader';
+import SuccessDialog from '../Helpers/SuccessDialog';
 
 function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { loginApi, RegistrationApi } = useApi();
+  const [showDialog,setShowDialog] = useState(false);
+  const [dialog,setDialog] = useState({});
   const [registerForm, setRegisterForm] = useState({
     email: '',
     password: '',
@@ -46,7 +49,15 @@ function LoginPage() {
         setLoading(false);
         navigate('/home');
       } else {
-        console.log(response)
+         const errorMessages = response.errors
+        ? Object.values(response.errors).flat().join('\n')
+        : response.message || "Invalid Email or Password";
+
+        setDialog({
+          title:"Login Failed",
+          message:errorMessages
+        })
+        setShowDialog(true);
         setLoading(false);
         console.error("failed to login");
       }
@@ -67,6 +78,15 @@ function LoginPage() {
         setLoading(false);
         navigate('/home');
       } else {
+        const errorMessages = response.errors
+        ? Object.values(response.errors).flat().join('\n')
+        : response.message || "Something went wrong";
+
+        setDialog({
+          title:"signUp Failed",
+          message:errorMessages
+        })
+        setShowDialog(true);
         setLoading(false);
         console.log("failed to signup");
       }
@@ -142,6 +162,11 @@ function LoginPage() {
         </form>
       </div>
       <Loader loading={loading} />
+      <SuccessDialog symbol={false}
+      show={showDialog}
+      title={dialog.title}
+      message={dialog.message}
+      onClose={() => setShowDialog(false)}/> 
     </div>
   )
 }

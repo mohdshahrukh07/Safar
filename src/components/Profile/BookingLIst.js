@@ -78,6 +78,8 @@ export default function BookingList() {
                 </div>
 
                 {/* Buttons */}
+                {console.log("booking.showCancelBtn",booking.showCancelBtn)
+                }{console.log("booking?.inProgress && !booking?.showDeleteBtn",booking?.inProgress && !booking?.showDeleteBtn)}
                 <div className="col-md-3 text-md-end text-center mt-3 mt-md-0">
                   {booking.showCancelBtn ? (
                     <>
@@ -88,7 +90,7 @@ export default function BookingList() {
                         Cancel
                       </button>
                     </>
-                  ) : booking?.inProgress && !booking?.showDeleteBtn ? (
+                  ) : booking?.inProgress && !booking.showCancelBtn ? (
                     <button className="btn btn-success fw-semibold" disabled>
                       In Progress
                     </button>
