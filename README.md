@@ -13,8 +13,8 @@ This is a web-based tour management system developed to simplify the process of 
 
 ## 🛠 Tech Stack
 - Frontend: React
-- Backend: Node.js / Laravel
-- Database: MongoDB / MySQL
+- Backend:  Laravel
+- Database:  MySQL
 
 ## 🎯 Problem Addressed
 Manual tour booking process was time-consuming and inefficient. This system automates the process.
@@ -23,7 +23,7 @@ Manual tour booking process was time-consuming and inefficient. This system auto
 The system improves efficiency and provides a user-friendly interface for booking tours.
 
 ## 🔗 Project Link
-(Add live demo or repo link)
+my project Link = https://mohdshahrukh07.github.io/Safar/
 
 ## ⚙️ How to Run
 1. Clone the repository
